@@ -1,4 +1,6 @@
 plugins {
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
     id 'war'
 }
@@ -8,63 +10,23 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-def wildfly_home = "/home/nghiselli/Projects/DistributedSystemsM/JBoss/wildfly-17.0.1.Final"
+def wildfly_home = "C:\\Standalone\\wildfly-18.0.1.Final"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
-    // LOG -------------------------------------------------------------------------------------------------------
-
-    compile 'ch.qos.logback:logback-classic:1.1.3'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
-
-    // DB -------------------------------------------------------------------------------------------------------
-
-    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17' // ---> jdbc driver
-
-    // SERVLET -------------------------------------------------------------------------------------------------------
-
-    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
-    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-
-    // https://mvnrepository.com/artifact/javax.servlet/jstl
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
     compile group: 'javax.servlet', name: 'jstl', version: '1.2' // ---> taglib
-
-
-
-    // SPRING -------------------------------------------------------------------------------------------------------
-
-    // https://mvnrepository.com/artifact/org.springframework/spring-core
-    compile group: 'org.springframework', name: 'spring-core', version: '5.1.10.RELEASE'
-    compile group: 'org.springframework', name: 'spring-context', version: '5.1.10.RELEASE'
-    compile group: 'org.springframework', name: 'spring-orm', version: '5.1.10.RELEASE'
-    //compile group: 'org.springframework', name: 'spring-web', version: '5.1.10.RELEASE'
-    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.1.10.RELEASE'
-
-
-    // https://mvnrepository.com/artifact/org.springframework/org.springframework.web.servlet
-    //compile group: 'org.springframework', name: 'org.springframework.web.servlet', version: '3.2.2.RELEASE'
-
-    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
-
-    // HIBERNATE -------------------------------------------------------------------------------------------------------
-
-    compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.2.2' // ---> org.apache.commons.dbcp.BasicDataSource
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.5.Final'// ---> ORG.HIBERNATE.*
-    compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.17.Final'// ---> JAVAX.VALIDATION
-
-    // https://mvnrepository.com/artifact/javax.persistence/persistence-api ---> JAVAX.PERSISTENCE.* (ie. annotations)
-    compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
-
-    // TESTS -------------------------------------------------------------------------------------------------------
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
 }
 
 
